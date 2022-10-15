@@ -1,0 +1,232 @@
+*{
+	box-sizing:border-box;
+	color:white;
+
+
+}
+html, body {
+	padding:0px;
+	margin:0px;
+	background-color:#000;
+	scroll-behavior: smooth;
+
+}
+	/*navigation*/
+header{
+	display:flex;
+	position:fixed ;
+	width:100%;
+	height:auto;
+	justify-content:space-between;
+	align-items:center;
+	padding:0px 10px;
+	background-color:#111;
+	z-index:1;
+}
+
+header h1 {
+color:#800080;
+font-family:'Courier New ', monospace;
+font-weight:bolder;
+padding:0px;
+margin:0px;
+}
+
+header ul li,a,button {
+font-family :"Trebuchet MS", sans-serif;
+font-size:20px;
+color:#edf0f1;
+text-decoration: none;
+}
+
+nav .link {
+	padding-top:10px;
+	list-style:none;
+	display:flex;
+	justify-content:center;
+}
+nav .link li {
+	display:inline-block;
+	padding:0px 12px;   
+}
+
+.about{
+	padding: 9px 25px;
+	background-color:rgba(66,44,49,1);
+	border:none;
+	border-radius:50px;
+	cursor: pointer;
+	transition:all 0.3s ease 0s;
+	font-family: 'Times New Roman', serif;
+
+}
+.about:hover{
+	background-color:rgba(0,136,169,0.5);
+}
+
+/*Background image*/
+.prime{
+	padding: 60px 0;
+	background-color:#800080;
+	min-height:100%;
+	margin-bottom:0px;
+	
+}
+/* Form Css*/
+#form{
+	padding:20px;
+	width:80%;
+	display: inline-block;
+	margin:0px 90px;
+}
+
+fieldset{
+padding: 20px;
+border-width: 10px;
+
+}
+
+legend, legend h1{
+text-align:center;
+color:#32CD32;
+
+}
+
+.formdetails{
+	margin:10px;
+	text-align: center;
+
+}
+
+form label{
+	color:#32CD32;
+	width:20%;
+	padding-bottom: 50px;
+
+}
+form option,select {
+	
+	color:#32CD32;
+	text-align: center;
+	width:80%;
+}
+form select,option,textarea{
+	color:black;
+}
+
+input{
+	padding:5px;
+	color:#32CD32;
+	width:60%;
+	border-style: groove;
+	border-width: 5px;
+	border-radius: 70px;
+	border-color:  black;
+	text-align: center;	
+	
+}
+
+#form .fbutton{
+	text-align:center;
+	background-color:#32CD32;
+	color:#000;
+	padding:10px;
+	margin-left:10px;
+
+}
+
+#buttons{
+	margin-top: 20px;
+	text-align:center;
+	border:none;
+}
+#form .fbutton:hover{
+	transition: all 0.9s ease 0.1s; 
+	color:#FFFFFF;
+}
+
+/*Start footer CSS */
+footer{
+	background:#000000;
+	bottom:0px;
+	height:auto;
+	position:relative ;
+	width:100%;
+	padding:10px;
+	display:flex;
+	justify-content: space-between;
+	flex-wrap:wrap;
+}
+
+
+footer .foot-content{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	padding-bottom:0px;
+	margin-bottom: 0px;
+}
+
+footer .foot-content .leftside{
+	margin-left:10px;
+	margin-right:30px;
+	width:40%;
+}
+footer .foot-content h2 {
+position:relative;
+color:#32CD32;
+font-weight:bolder;
+margin-bottom:15px;	
+text-transform:uppercase;
+font-family:"Courier New";
+
+}
+footer p {
+	color:#999;
+	font-family:"Trebuchet MS";} 
+.navbox{
+	position:relative;
+	width:25%;
+}
+.navbox ul li , .rightside ul li {
+	list-style:none ;
+}
+.navbox ul li a, .rightside ol li a {
+	color:#999;
+	text-decoration:none;
+	margin-bottom:5px;
+	display:inline-block; 
+}
+.navbox ul li a:hover, .rightside ol li a:hover{
+	color:#116466;
+	transition:all 0.3s ease 0s;
+}
+.rightside{
+	width:25%;
+}
+
+.footer-bottom{
+	width:100%;
+	padding:0px;
+	margin:0px;
+	text-align:center;
+	height:auto;
+	background-color:#616969 ;
+}
+.footer-bottom p,.footer-bottom p a{
+	padding: 0px;
+	margin:0px;
+	color:#ffffff;
+	font-family:'Times New Roman', serif; 
+}
+
+
+
+
+
+
+
+
+
+
