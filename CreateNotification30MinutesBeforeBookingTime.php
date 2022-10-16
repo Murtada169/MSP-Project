@@ -46,13 +46,14 @@ TODO
     $resultUserID = mysqli_query($conn, $sql);
 
     // if there's userID, that means there's an appointment in that slot, so execute the code below
-    if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($resultUserID) > 0) {
         // create notification details
         $subject = 'Upcoming Appointment'
         $content = 'You have an appointment in 30 minutes'
 
         //populate the notification table (PLEASE CHANGE TABLE NAME AND COLUMN NAME ACCORDINGLY,
-        // dateCreated is DATETIME datatype, recipiet)
+        // dateCreated is DATETIME datatype)
+        // logic needs to be changed, multiple userID in resultUserID is possible
         $sql = "INSERT INTO NotificationTable (recipientID, subject, content, dateCreated) VALUES ('$resultUserID', '$subject', '$content', $currentTime)";
 
         if (mysqli_query($conn, $sql)) {
