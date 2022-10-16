@@ -1,0 +1,41 @@
+Accounts
+--------
+
+ID (pk) (not null)
+fName (text) (not null)
+lName (text) (not null)
+DOB (date) (not null)
+Email (text) (not null)
+password (text) (not null)
+username (text)(pk) (not null)
+phone number (number) (not null)
+
+
+Bookings
+---------
+
+ID (pk) (not null)
+username (text)(fk)
+datetime (datetime) (not null)
+Desc (text) (not null)
+booked/not booked (bool) (not null)
+
+
+Advertisements
+---------------
+
+ID (pk) (not null)
+IMGname (text) (not null)
+title (text) (not null)
+desc (text) (not null)
+
+
+notifications
+--------------
+
+ID (pk) (not null)
+username (text)(fk) (not null)
+subject (text) (not null)
+desc (text) (not null)
+datetime (datetime) (fk from bookings) (not null)
+read/unread (bool) (not null)
