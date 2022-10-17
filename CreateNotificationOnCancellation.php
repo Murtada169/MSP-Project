@@ -8,6 +8,11 @@
     - set content to 'Your appointment with booking ID bookingID has been cancelled by username'
     - add another details (refer to the other script)
     - insert into to database
+
+TODO
+- send e-mail to the user registered e-mail 
+    use PHPMailer
+    gmail SMTP no longer available, use zoho or mailjet
  -->
 
 <?php
@@ -30,9 +35,16 @@
     // get the bookingID from another page/script
     $BookingID = $_POST['BookingID']
 
+    //find the related AccountID from BookingDetails
     $sql = "SELECT AccountID FROM BookingDetails WHERE BookingID = $BookingID";
     $AccountID = mysqli_query($conn, $sql);
 
+    // create notification details
+    $subject = 'Canncelation of Appointment'
+    $content = 'You have an appointment has been cancelled'
+
+    //populate the notification table (PLEASE CHANGE TABLE NAME AND COLUMN NAME ACCORDINGLY,
+    // dateCreated is DATETIME datatype)
     $sql = "INSERT INTO Notifications (AccountID, subject, desc, datetime, isRead) VALUES ('$AccountID', '$subject', '$content', $currentTime, false)";
 
     if (mysqli_query($conn, $sql)) {
