@@ -20,7 +20,9 @@ TO BE CONFIRMED
 TO BE CONFIRMED
 - PHP script populate the table with the above notification details 
 TODO
-- send e-mail to the user registered e-mail HOW THE FUCK CAN I SET THIS UP-->
+- send e-mail to the user registered e-mail 
+    use PHPMailer
+    gmail SMTP no longer available, use zoho or mailjet-->
 
 <?php
     date_default_timezone_set('Asia/Kuching');
@@ -43,7 +45,7 @@ TODO
 
     // search for userID with matching date and time from booking table (PLEASE CHANGE TABEL NAME AND COLUMN NAME ACCORDINGLY)
     $sql = "SELECT userID FROM BookingList WHERE bookingtime > $currentTimeLowerLimit AND bookingtime < $currentTimeUpperLimit";
-    $resultUserID = mysqli_query($conn, $sql);
+    $AccountID = mysqli_query($conn, $sql);
 
     // if there's userID, that means there's an appointment in that slot, so execute the code below
     if (mysqli_num_rows($resultUserID) > 0) {
@@ -54,7 +56,7 @@ TODO
         //populate the notification table (PLEASE CHANGE TABLE NAME AND COLUMN NAME ACCORDINGLY,
         // dateCreated is DATETIME datatype)
         // logic needs to be changed, multiple userID in resultUserID is possible
-        $sql = "INSERT INTO NotificationTable (recipientID, subject, content, dateCreated) VALUES ('$resultUserID', '$subject', '$content', $currentTime)";
+        $sql = "INSERT INTO Notifications (AccountID, subject, desc, datetime, isRead) VALUES ('$AccountID', '$subject', '$content', $currentTime, false)"
 
         if (mysqli_query($conn, $sql)) {
             echo "New record created successfully";
