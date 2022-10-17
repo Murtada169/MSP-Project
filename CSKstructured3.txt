@@ -7,9 +7,9 @@ fName varchar(20) NOT NULL,
 lName varchar (20) NOT NULL,
 DOB date NOT NULL,
 email varchar (50) NOT NULL,
-username varchar (20) NOT NULL,
-password varchar (20) NOT NULL,
-phoneNo int (11) UNSIGNED NOT NULL
+username varchar (10) NOT NULL,
+password varchar (10) NOT NULL,
+phoneNo int (10) UNSIGNED NOT NULL
 );
 
 CREATE TABLE Bookings(
