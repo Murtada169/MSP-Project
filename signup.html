@@ -10,7 +10,7 @@
 <title>Sign up</title>
 
 <link rel ="stylesheet" href="Munaamstyle.css"/>
-
+<script src="script.js"></script>
 </head>
 
 <body>
@@ -35,35 +35,52 @@
 		<a class="about" href="TBD" >TBD</a>
 	</header>
 	<div class="prime">	
+
+
+
 		<form id="form" >
 			<fieldset>
 				<legend><h1 class="form">Personal Details</h1></legend>
 				<div class="formdetails">
-					<label for="fname"> First Name:* </label><input  type="text" id="fname" name="fname"   pattern="[a-zA-Z]+" placeholder="Chong"  maxlength="25"   required="required"/><br/><br/><br/>
-					<label for="flname">  Last Name :* </label><input id="flname" name="flname" type="text"  pattern="[a-zA-Z]+"  maxlength="30"  placeholder="Qing" required="required"/>
+					<label for="fname"> First Name:* </label><input  type="text" id="fname" name="fname"   pattern="[a-zA-Z]+" placeholder="Chong"  maxlength="20"   required="required"/><br/><br/><br/>
+					<label for="flname">  Last Name :* </label><input id="flname" name="flname" type="text"  pattern="[a-zA-Z]+"  maxlength="20"  placeholder="Qing" required="required"/>
 					<br/><br/><br/>
 					<label for="fdob"> Date Of Birth:* </label><input id="fdob" name="fdob" type="date" required="required"/><br/><br/><br/>
-					<label for="fmname"> User Name :* </label><input id="fmname" name="fmname" type="text"  pattern="[a-zA-Z]+" maxlength="30"  placeholder="" required="required"/><br/><br/><br/>
+					<label for="funame"> User Name :* </label><input id="funame" name="funame" type="text"  pattern="[a-zA-Z0-9._%+-]" maxlength="10"  placeholder="User Name" required="required"/><br/><br/><br/>
 					<label for="femail"> Email Address :* </label>
 					<input onchange="validateEmail()" id="femail" name="femail" type="email"  placeholder="someone@example.com" required="required"/><br/><br/><br/>
-					<label for="fPass"> Password:* </label><input  type="text" id="fname" name="fPass"   pattern="[a-zA-Z]+" placeholder=""  maxlength="15"   required="required"/><br/><br/><br/>
+					<label for="pass"> Password :*</label> 
+						<input id="pass"
+							   type="password"
+							   name="pass"
+							   placeholder="Enter Password"
+							   required="required"></br></br>
+					<label for="confirm_pass">Confirm Password :*</label>
+						<input id="confirm_pass"
+							   type="password"
+							   name="confirm_pass"
+							   placeholder="Confirm Password"
+							   required="required"
+							   onkeyup="validate_password()"/></br>
 					
-					<label for="fphone"> Phone Number :*   </label><input onkeypress="return validateNumber(event)" id="fphone" name="fphone" type="tel" pattern="[0-9]{0-10}"  maxlength="10" placeholder="##########" required="required"/><br/><br/><br/>
-					
+					<span id="wrong_pass_alert"></span>	
+				<br/><br/><br/>			
+					<label for="fphone"> Phone Number :*   </label>
+					<input onkeypress="return validateNumber(event)" id="fphone" name="fphone" type="tel" pattern="[0-9]{0-10}"  maxlength="10" placeholder="##########" required="required"/><br/><br/><br/>
 				</div>
 			</fieldset>
 			
-					
-			</fieldset>
 			
-				<fieldset id="buttons">
-					<!-- <input type="button"  class="fbutton" value="Post Enquiry"> -->
-					<button class="fbutton" type="button" onclick="submitData();">Sign up</button>
-					<button class="fbutton" type="reset" value="reset">Reset</button>
-				</fieldset>
+			<fieldset id="buttons">
+				<button class="fbutton" type="button" onclick="submitData();">Sign UP</button>
+				<button class="fbutton" type="reset" value="reset">Reset</button>
+			</fieldset>
 				</form>
 				
-			</div>
+
+
+
+	</div>
 			 <!--footer-->	
 			<footer>
 	<div class="foot-content">
@@ -101,8 +118,6 @@
 		</div>	
 	
 	</footer>
-
-
 
 
 </body>
