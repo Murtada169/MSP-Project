@@ -1,0 +1,45 @@
+CREATE DATABASE CSK;
+USE DATABASE CSK;
+
+CREATE TABLE Accounts(
+accountID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+fName varchar(20) NOT NULL,
+lName varchar (20) NOT NULL,
+DOB date NOT NULL,
+email varchar (50) NOT NULL,
+username varchar (20) NOT NULL,
+password varchar (20) NOT NULL,
+phoneNo int (11) UNSIGNED NOT NULL
+);
+
+CREATE TABLE Bookings(
+bookingID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+date datetime NOT NULL,
+bookingDesc varchar (50) NOT NULL,
+isBooked bit NOT NULL
+);
+
+CREATE TABLE BookingDetails(
+bookingID int (4) UNSIGNED NOT NULL,
+accountID int (4) UNSIGNED NOT NULL,
+PRIMARY KEY (bookingID, accountID),
+FOREIGN KEY (bookingID) REFERENCES Bookings (bookingID),
+FOREIGN KEY (accountID) REFERENCES Accounts (accountID)
+);
+
+CREATE TABLE Notifications(
+notificationID int (5) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+accountID int (4) UNSIGNED NOT NULL,
+subject varchar (50) NOT NULL,
+notifDesc varchar (100) NOT NULL,
+date datetime NOT NULL,
+isRead bit NOT NULL,
+FOREIGN KEY (accountID) REFERENCES Accounts (accountID)
+);
+
+CREATE TABLE Advertisements(
+advertID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+imgName varchar(20) NOT NULL,
+title varchar (50) NOT NULL,
+advertDesc varchar (100) NOT NULL
+);
