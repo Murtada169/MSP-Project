@@ -24,17 +24,17 @@ TODO
     use PHPMailer
     gmail SMTP no longer available, use zoho or mailjet-->
 
-<?php
+    <?php
     date_default_timezone_set('Asia/Kuching');
     $currentTime = date('Y-m-d H:i:s');
     $currentTimeLowerLimit = date('Y-m-d H:i:s', strtotime('+25 minutes', strtotime(date('Y-m-d H:i:s'))));
-    $currentTimeUpperLimit = date('Y-m-d H:i:s', strtotime('+40 minutes', strtotime(date('Y-m-d H:i:s'))));
+    $currentTimeUpperLimit = date('Y-m-d H:i:s', strtotime('+35 minutes', strtotime(date('Y-m-d H:i:s'))));
 
     // set the servername,username and password (PLEASE CHANGE THE VALUE ACCORDINGLY)
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "Testdb";
+    $dbname = "CSK";
 
     // Create connection
     $conn = mysqli_connect($servername, $username, $password,$dbname);
@@ -43,28 +43,45 @@ TODO
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // search for userID with matching date and time from booking table (PLEASE CHANGE TABEL NAME AND COLUMN NAME ACCORDINGLY)
-    $sql = "SELECT userID FROM BookingList WHERE bookingtime > $currentTimeLowerLimit AND bookingtime < $currentTimeUpperLimit";
-    $AccountID = mysqli_query($conn, $sql);
+    // search for bookingID with matching date and time from booking table (PLEASE CHANGE TABEL NAME AND COLUMN NAME ACCORDINGLY)
+    $sql = "SELECT BookingID FROM Bookings WHERE date > '$currentTimeLowerLimit' AND date < '$currentTimeUpperLimit' AND isBooked = '1'";
+    $result = mysqli_query($conn, $sql);
 
-    // if there's userID, that means there's an appointment in that slot, so execute the code below
-    if (mysqli_num_rows($resultUserID) > 0) {
+    // if there's bookingID, that means there's an appointment in that slot, so execute the code below
+    if (mysqli_num_rows($result) > 0) {
+
+        echo "test Booking found"; 
+
         // create notification details
-        $subject = 'Upcoming Appointment'
-        $content = 'You have an appointment in 30 minutes'
+        $subject = "Upcoming Appointment";
+        $row = mysqli_fetch_row($result);
+        $content = "You have an appointment in 30 minutes with booking ID of " . $row[0] . "." ;
 
-        //populate the notification table (PLEASE CHANGE TABLE NAME AND COLUMN NAME ACCORDINGLY,
-        // dateCreated is DATETIME datatype)
-        // logic needs to be changed, multiple userID in resultUserID is possible
-        $sql = "INSERT INTO Notifications (AccountID, subject, desc, datetime, isRead) VALUES ('$AccountID', '$subject', '$content', $currentTime, false)"
+        echo $content;
 
-        if (mysqli_query($conn, $sql)) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        //search for accountID related to the bookingID
+        $sql = "SELECT AccountID FROM BookingDetails WHERE bookingID = '$row[0]'";
+        $result = mysqli_query($conn, $sql);
+
+        //check if there are accountID
+        if (mysqli_num_rows($result) > 0) {
+
+            echo "test Account found"; 
+
+            //for every  accountID, insert new notification
+            while ($row = mysqli_fetch_row($result)) {
+
+                echo "in loop"; 
+                echo $row[0]; 
+
+                $sql = "INSERT INTO Notifications (accountID, subject, notifDesc, date, isRead) VALUES ('$row[0]', '$subject', '$content', '$currentTime', 'false')";
+                if (mysqli_query($conn, $sql) == false) {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                }
+            }
+            mysqli_free_result($result);
         }
 
-    } else {
-        echo "0 results";
+        mysqli_close($conn);
     }
 ?>
