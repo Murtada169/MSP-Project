@@ -24,7 +24,8 @@ TODO
     use PHPMailer
     gmail SMTP no longer available, use zoho or mailjet-->
 
-    <?php
+<?php
+    
     date_default_timezone_set('Asia/Kuching');
     $currentTime = date('Y-m-d H:i:s');
     $currentTimeLowerLimit = date('Y-m-d H:i:s', strtotime('+25 minutes', strtotime(date('Y-m-d H:i:s'))));
@@ -50,14 +51,10 @@ TODO
     // if there's bookingID, that means there's an appointment in that slot, so execute the code below
     if (mysqli_num_rows($result) > 0) {
 
-        echo "test Booking found"; 
-
         // create notification details
         $subject = "Upcoming Appointment";
         $row = mysqli_fetch_row($result);
         $content = "You have an appointment in 30 minutes with booking ID of " . $row[0] . "." ;
-
-        echo $content;
 
         //search for accountID related to the bookingID
         $sql = "SELECT AccountID FROM BookingDetails WHERE bookingID = '$row[0]'";
@@ -66,22 +63,26 @@ TODO
         //check if there are accountID
         if (mysqli_num_rows($result) > 0) {
 
-            echo "test Account found"; 
-
-            //for every  accountID, insert new notification
+            //for every  accountID, insert new notification and send e-mail
             while ($row = mysqli_fetch_row($result)) {
-
-                echo "in loop"; 
-                echo $row[0]; 
 
                 $sql = "INSERT INTO Notifications (accountID, subject, notifDesc, date, isRead) VALUES ('$row[0]', '$subject', '$content', '$currentTime', 'false')";
                 if (mysqli_query($conn, $sql) == false) {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
+
+                $sql = "SELECT email FROM accounts WHERE accountID = '$row[0]'";
+                $resultemail = mysqli_query($conn, $sql);
+
+                $row = mysqli_fetch_row($resultemail);
+                echo "email:"; 
+                echo $row[0];
+
+                //maybe put e-mail code here or make a separate php script
             }
             mysqli_free_result($result);
         }
-
-        mysqli_close($conn);
     }
+
+    mysqli_close($conn);
 ?>
