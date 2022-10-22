@@ -1,6 +1,6 @@
 <?php
     // Start the session
-    session_start();
+    //session_start();
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +35,20 @@
 #notificationTable tr.header, #notificationTable tr:hover {
   background-color: #f1f1f1;
 }
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 </style>
 
 <title>Cacti Succulent Kuching</title>
@@ -56,6 +70,14 @@
             $username = "root";
             $password = "";
             $dbname = "CSK";
+
+            if (isset ($_POST['readbutton'])){
+                $notificationID = $_POST['readbutton'];
+                $conn = mysqli_connect($servername, $username, $password, $dbname);
+                $query = "UPDATE Notifications SET isRead=1 WHERE notificationID=$notificationID";
+                mysqli_query($conn, $query);
+                mysqli_close($conn);
+            }
 
             // Create connection
             $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -79,18 +101,23 @@
                 </tr>";
             if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr><td>". $row['date'] . "</td><td>". $row['subject'] . "</td><td>" . $row['notifDesc'] . "</td><td class='isRead'>" . $row['isRead'] . "</td></tr>";
+                    $notificationID = $row['notificationID'];
+                    echo "<tr><td>". $row['date'] . "</td>
+                            <td>". $row['subject'] . "</td>
+                            <td>" . $row['notifDesc'] . "</td>
+                            <td class='isRead'>" . $row['isRead'] . "</td>
+                            <td><form method='post' action='vipewNotifications.php'><button class='button' type='submit' name='readbutton' value='$notificationID'/>Mark as Read</button></form></td></tr>";
                 }
             }else {
                 echo "0 results";
             }
             echo "</table>";
-
             mysqli_close($conn);
         ?>
     </div>
 
     <script>
+        
         function highlightUnread(){
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("subjectsSelection");
