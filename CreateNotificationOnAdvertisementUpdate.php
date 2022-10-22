@@ -33,7 +33,7 @@
 
     //populate the notification table (PLEASE CHANGE TABLE NAME AND COLUMN NAME ACCORDINGLY,
     // dateCreated is DATETIME datatype)
-    $sql = "INSERT INTO Notifications (AccountID, subject, desc, datetime, isRead) VALUES ('2', '$subject', '$content', $currentTime, 'false')";
+    $sql = "INSERT INTO Notifications (AccountID, subject, desc, datetime, isRead) VALUES ('2', '$subject', '$content', '$currentTime', 'false')";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
