@@ -66,9 +66,11 @@ body {
         }
     }
 
-    echo "<a href='#' class='notification'>
-        <span>Inbox</span>
-        <span class='badge'>$unreadCount</span>
-    </a>"
+    echo "<a href='ViewNotifications.php' class='notification'>
+        <span>Notification</span>";
+    if ($unreadCount == 0){
+      echo "<span class='badge'>$unreadCount</span>";
+    }
+    echo "</a>";
 ?>
 </html>
