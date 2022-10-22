@@ -34,6 +34,7 @@ body {
 </head>
 
 <?php
+    //uncomment the line below on live production
     // $accountID = $_SESSION["accountID"];
 
     $servername = "localhost";
@@ -48,7 +49,9 @@ body {
     //     die("Connection failed: " . mysqli_connect_error());
     // }
     
+    //uncomment for live production
     // $query = "SELECT * FROM Notifications WHERE accountID = '$accountID' OR accountID = 2 ORDER BY notificationID DESC";
+    //uncomment for local testing
     $query = "SELECT * FROM Notifications ORDER BY notificationID DESC";
 
     $result = mysqli_query($conn, $query);
