@@ -63,7 +63,7 @@ TODO
         //check if there are accountID
         if (mysqli_num_rows($result) > 0) {
 
-            //for every  accountID, insert new notification and send e-mail
+            //for every  accountID, insert new notification
             while ($row = mysqli_fetch_row($result)) {
 
                 $sql = "INSERT INTO Notifications (accountID, subject, notifDesc, date, isRead) VALUES ('$row[0]', '$subject', '$content', '$currentTime', 'false')";
@@ -75,10 +75,9 @@ TODO
                 $resultemail = mysqli_query($conn, $sql);
 
                 $row = mysqli_fetch_row($resultemail);
-                echo "email:"; 
-                echo $row[0];
 
                 //maybe put e-mail code here or make a separate php script
+                //access email address with $row[0]
             }
             mysqli_free_result($result);
         }
