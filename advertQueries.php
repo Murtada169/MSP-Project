@@ -17,12 +17,17 @@
     mysqli_close($GLOBALS['conn']);
     return $result;
   }
-
+  function GetOneAdvert($advertID){
+    $sql = "SELECT * FROM advertisements WHERE advertID = '$advertID'";
+    $result = $GLOBALS['conn']->query($sql) or die($GLOBALS['conn']->error);
+    mysqli_close($GLOBALS['conn']);
+    return $result;
+  }
   // Takes in imgName, title and advertDresc as parameters and INSERTS into Advertisemtns table
   function AddAdverts($imgName, $title, $advertDesc){
     $sql = "INSERT into advertisements (imgName, title, advertDesc) VALUES ('$imgName', '$title', '$advertDesc');
             INSERT into notifications (accountID, subject, notifDesc, date, isRead)
-              VALUES (2, 'New advertisement alert', '$title', CURRENT_TIMESTAMP, 0);"
+              VALUES (2, 'New advertisement alert', '$title', CURRENT_TIMESTAMP, 0);";
     $result = $GLOBALS['conn']->multi_query($sql) or die($GLOBALS['conn']->error);
     mysqli_close($GLOBALS['conn']);
   }
