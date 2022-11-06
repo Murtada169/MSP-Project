@@ -5,8 +5,14 @@
   $username = "id19606244_cskadmin";
   $password = "iY5pW(%cpS!]VXy/";
   $dbname = "id19606244_csk";
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-  $GLOBALS['conn'] = $conn;
+  $charset = 'utf8mb4';
+
+  try{
+    $GLOBALS['conn'] = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $GLOBALS['conn']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  } catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+  }
 
   // ---------- GENERAL SQL FUNCTIONS ----------
 
