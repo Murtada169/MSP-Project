@@ -106,7 +106,7 @@
                             <td>". $row['subject'] . "</td>
                             <td>" . $row['notifDesc'] . "</td>
                             <td class='isRead'>" . $row['isRead'] . "</td>
-                            <td><form method='post' action='vipewNotifications.php'><button class='button' type='submit' name='readbutton' value='$notificationID'/>Mark as Read</button></form></td></tr>";
+                            <td><form method='post' action='viewNotifications.php'><button class='button' type='submit' name='readbutton' value='$notificationID'/>Mark as Read</button></form></td></tr>";
                 }
             }else {
                 echo "0 results";
