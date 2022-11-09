@@ -93,11 +93,10 @@
     return $stmt;
   }
 
+  // Takes in all parameters and UPDATES accounts table
   function EditOwnAccount($accountID, $fname, $lname, $DOB, $email, $username, $password, $phoneno){
     $stmt = $GLOBALS['conn']->prepare("UPDATE Accounts SET fname=:fname, lname=:lname , DOB=:DOB, email=:email,
-            username=:username, phoneno=:phoneno WHERE accountID = :accountID;
-            INSERT into Notifications (accountID, subject, notifDesc, date, isRead)
-              VALUES (:accountID, 'Account updated', 'Your account details have been updated', CURRENT_TIMESTAMP, 0);");
+            username=:username, phoneno=:phoneno WHERE accountID = :accountID;")
     $stmt->bindParam(":accountID", $accountID, PDO::PARAM_INT);
     $stmt->bindParam(":fname", $fname, PDO::PARAM_STR);
     $stmt->bindParam(":lname", $lname, PDO::PARAM_STR);
@@ -106,7 +105,11 @@
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
     $stmt->bindParam(":password", $password, PDO::PARAM_STR);
     $stmt->bindParam(":phoneno", $phoneno, PDO::PARAM_STR);
+    $stmt->execute() or die($GLOBALS['conn']->error);
 
+    $stmt = $GLOBALS['conn']->prepare("INSERT into Notifications (accountID, subject, notifDesc, date, isRead)
+              VALUES (:accountID, 'Account updated', 'Your account details have been updated', CURRENT_TIMESTAMP, 0);");
+    $stmt->bindParam(":accountID", $accountID, PDO::PARAM_INT);
     $stmt->execute() or die($GLOBALS['conn']->error);
 
     $GLOBALS['conn'] = null;

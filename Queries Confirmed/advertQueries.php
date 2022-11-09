@@ -16,18 +16,9 @@
 
   // ---------- ADMIN SQL FUNCTIONS ----------
 
-  // Returns all adverts (returns as $result, needs fetch_assoc to access)
-  function ViewAdverts(){
+  // Returns all adverts (returns as $result, needs fetch to access)
+  function ViewAllAdverts(){
     $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Advertisements");
-    $stmt->execute() or die($GLOBALS['conn']->error);
-    $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $GLOBALS['conn'] = null;
-    return $stmt;
-  }
-
-  function GetOneAdvert($advertID){
-    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Advertisements WHERE advertID = :advertID");
-    $stmt->bindParam(":advertID", $advertID, PDO::PARAM_INT);
     $stmt->execute() or die($GLOBALS['conn']->error);
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $GLOBALS['conn'] = null;
@@ -37,26 +28,31 @@
   // Takes in imgName, title and advertDresc as parameters and INSERTS into Advertisemtns table
   function AddAdverts($imgName, $title, $advertDesc){
     $stmt = $GLOBALS['conn']->prepare("INSERT into Advertisements (imgName, title, advertDesc)
-            VALUES (:imgName, :title, :advertDesc);
-            INSERT into Notifications (accountID, subject, notifDesc, date, isRead)
-              VALUES (2, 'New advertisement alert', :title, CURRENT_TIMESTAMP, 0);");
+            VALUES (:imgName, :title, :advertDesc);");
     $stmt->bindParam(":imgName", $imgName, PDO::PARAM_STR);
     $stmt->bindParam(":title", $title, PDO::PARAM_STR);
     $stmt->bindParam(":advertDesc", $advertDesc, PDO::PARAM_STR);
     $stmt->execute() or die($GLOBALS['conn']->error);
+
+    $stmt = $GLOBALS['conn']->prepare("INSERT into Notifications (accountID, subject, notifDesc, date, isRead)
+        VALUES (2, 'New advertisement alert', :title, CURRENT_TIMESTAMP, 0);");
+    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    
     $GLOBALS['conn'] = null;
   }
 
-  // Takes in advertID, imgName, title and advertDesc as parameters and UPDATES Advertisemtns table
+  // Takes in advertID, imgName, title and advertDesc as parameters and UPDATES Advertisments table
   function EditAdvertDetails($advertID, $title, $advertDesc){
     $stmt = $GLOBALS['conn']->prepare("UPDATE Advertisements SET title=:title, advertDesc=:advertDesc WHERE advertID = :advertID");
-    $stmt->bindParam(":imgName", $imgName, PDO::PARAM_STR);
     $stmt->bindParam(":title", $title, PDO::PARAM_STR);
     $stmt->bindParam(":advertDesc", $advertDesc, PDO::PARAM_STR);
+    $stmt->bindParam(":advertID", $advertID, PDO::PARAM_STR);
     $stmt->execute() or die($GLOBALS['conn']->error);
     $GLOBALS['conn'] = null;
   }
 
+  // Takes in advertID, imgName, title and advertDesc as parameters and UPDATES Advertisments table
   function EditAdvertImageAndDetails($advertID, $imgName, $title, $advertDesc){
     $stmt = $GLOBALS['conn']->prepare("UPDATE Advertisements SET imgName = :imgName, title=:title, advertDesc=:advertDesc WHERE advertID = :advertID");
     $stmt->bindParam(":advertID", $advertID, PDO::PARAM_STR);
@@ -66,7 +62,6 @@
     $stmt->execute() or die($GLOBALS['conn']->error);
     $GLOBALS['conn'] = null;
   }
-
 
   // Takes in advertID as a parameter and DELETES from Advertisemtns table
   function DeleteAdvert($advertID){

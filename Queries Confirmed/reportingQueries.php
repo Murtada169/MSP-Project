@@ -18,23 +18,28 @@
 
   // Nummber of vistors on a day to day basis
   function NumberOfVisitorsPerDay(){
-    $sql = "SELECT COUNT(b.accountID) AS Visitors, CAST(a.date as DATE) AS Date FROM Bookings a JOIN BookingDetails b ON a.bookingID = b.bookingID GROUP BY CAST(a.date as DATE)";
-    $result = $GLOBALS['conn']->query($sql) or die($GLOBALS['conn']->error);
-    mysqli_close($GLOBALS['conn']);
-    return $result;
+    $stmt = $GLOBALS['conn']->prepare("SELECT COUNT(b.accountID) AS Visitors, CAST(a.date as DATE) AS Date FROM Bookings a JOIN BookingDetails b ON a.bookingID = b.bookingID GROUP BY CAST(a.date as DATE)";);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $GLOBALS['conn'] = null;
+    return $stmt;
   }
 
   // Which time is most preferred
   function TimeMostPreferred(){
-    $sql = "SELECT COUNT(b.accountID) AS Visitors, CAST(a.date as TIME) AS TIME FROM Bookings a JOIN BookingDetails b ON a.bookingID = b.bookingID GROUP BY CAST(a.date as TIME)"
-    $result = $GLOBALS['conn']->multi_query($sql) or die($GLOBALS['conn']->error);
-    mysqli_close($GLOBALS['conn']);
+    $stmt = $GLOBALS['conn']->prepare("SELECT COUNT(b.accountID) AS Visitors, CAST(a.date as TIME) AS TIME FROM Bookings a JOIN BookingDetails b ON a.bookingID = b.bookingID GROUP BY CAST(a.date as TIME)");
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $GLOBALS['conn'] = null;
+    return $stmt;
   }
 
   // Bookings per visitor
   function BookingsPerVisitor(){
-    $sql = "SELECT COUNT(b.accountID) AS Visitors, a.username FROM Accounts a JOIN BookingDetails b ON a.accountID = b.accountID GROUP BY b.accountID";
-    $result = $GLOBALS['conn']->query($sql) or die($GLOBALS['conn']->error);
-    mysqli_close($GLOBALS['conn']);
+    $stmt = $GLOBALS['conn']->prepare("SELECT COUNT(b.accountID) AS Visitors, a.username FROM Accounts a JOIN BookingDetails b ON a.accountID = b.accountID GROUP BY b.accountID";);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $GLOBALS['conn'] = null;
+    return $stmt;
   }
 ?>
