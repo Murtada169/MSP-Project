@@ -2,17 +2,20 @@
   // DO NOT MESS WITH STUFF HERE
   // CHANGE WHEN MIGRATING TO SERVER
   $servername = "localhost";
-  $username = "id19606244_cskadmin";
-  $password = "iY5pW(%cpS!]VXy/";
-  $dbname = "id19606244_csk";
+  $username = "root";
+  $password = "";
+  $dbname = "CSK";
   $charset = 'utf8mb4';
 
+ 
   try{
     $GLOBALS['conn'] = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $GLOBALS['conn']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
+     echo "Error: " . $e->getMessage();
   }
+  
+  
 
   // ---------- ADMIN SQL FUNCTIONS ----------
 
@@ -34,14 +37,35 @@
     return $stmt;
   }
 
+  function GetOneBookingDate($date){
+    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Bookings WHERE date = :date");
+    $stmt->bindParam(":date", $date, PDO::PARAM_STR);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $GLOBALS['conn'] = null;
+    return $stmt;
+  }
+
   // Takes in date, time and description/title as parameters and INSERTS into Bookings table
   function AddBookingsFromAdmin($date, $time, $bookingDesc){
     $datetime = $date . " " . $time;
-    $stmt = $GLOBALS['conn']->prepare("INSERT into Bookings (date, bookingDesc, isBooked) VALUES (:bookingDate, :bookingDesc, 0)");
-    $stmt->bindParam(":bookingDate", $datetime, PDO::PARAM_STR);
-    $stmt->bindParam(":bookingDesc", $bookingDesc, PDO::PARAM_STR);
+    $stmt = $GLOBALS['conn']->prepare("SELECT * FROM Bookings WHERE date = :datetime");
+    $stmt->bindParam(":datetime", $datetime, PDO::PARAM_STR);
     $stmt->execute() or die($GLOBALS['conn']->error);
-    $GLOBALS['conn'] = null;
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    if($stmt->fetch() == 0){
+      $stmt = $GLOBALS['conn']->prepare("INSERT into Bookings (date, bookingDesc, isBooked) VALUES (:bookingDate, :bookingDesc, 0)");
+      $stmt->bindParam(":bookingDate", $datetime, PDO::PARAM_STR);
+      $stmt->bindParam(":bookingDesc", $bookingDesc, PDO::PARAM_STR);
+      $stmt->execute() or die($GLOBALS['conn']->error);
+      $GLOBALS['conn'] = null;
+      return true;
+    }
+    else{
+        return false; 
+    }
+
+    
   }
 
   // Takes in bookingID, date, time, description/title as parameters and:
