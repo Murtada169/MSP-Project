@@ -32,6 +32,7 @@ if (isset($_GET['remove']) && is_numeric($_GET['remove']) && isset($_SESSION['ca
     unset($_SESSION['cart'][$_GET['remove']]);
 }
 
+//if the 'update' button on view cart page is clicked
 if (isset($_POST['update']) && isset($_SESSION['cart'])) {
     // Loop through the post data so we can update the quantities for every product in cart
     foreach ($_POST as $k => $v) {
