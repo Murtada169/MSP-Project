@@ -150,6 +150,15 @@
     $GLOBALS['conn'] = null;
   }
 
+  // Takes in bookingID as a paremeter and returns the usernames associated with it
+  function ViewUsersInBooking($bookingID){
+    $stmt = $GLOBALS['conn']->prepare("SELECT a.username FROM accounts a JOIN bookingdetails b ON a.accountID = b.accountID WHERE b.bookingID = :bookingID");
+    $stmt->bindParam(":bookingID", $bookingID, PDO::PARAM_INT);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $GLOBALS['conn'] = null;
+
+    return $stmt;
+  }
 
   // ---------- USER SQL FUNCTIONS ----------
 
@@ -276,4 +285,5 @@
 
     return $stmt;
   }
+
 ?>
