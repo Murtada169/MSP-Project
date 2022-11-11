@@ -38,21 +38,22 @@
   }
 
   // Takes in productName, productDesc, productImgName, price and type as parameters and UPDATES into Inventory table
-  function EditProduct($productName, $productDesc, $productImgName, $price, $available){
-    $stmt = $GLOBALS['conn']->prepare("UPDATE Inventory SET productName = :productName, productDesc = :productDesc, productImgName = :productImgName, price = :price, available = :available;)");
+  function EditProduct($productID, $productName, $productDesc, $productImgName, $price, $available){
+    $stmt = $GLOBALS['conn']->prepare("UPDATE Inventory SET productName = :productName, productDesc = :productDesc, productImgName = :productImgName, price = :price, available = :available WHERE productID = :productID;)");
     $stmt->bindParam(":productName", $productName, PDO::PARAM_STR);
     $stmt->bindParam(":productDesc", $productDesc, PDO::PARAM_STR);
     $stmt->bindParam(":productImgName", $productImgName, PDO::PARAM_STR);
     $stmt->bindParam(":price", $price, PDO::PARAM_STR);
     $stmt->bindParam(":available", $available, PDO::PARAM_STR);
+    $stmt->bindParam(":productID", $productID, PDO::PARAM_INT);
     $stmt->execute() or die($GLOBALS['conn']->error);
     $GLOBALS['conn'] = null;
   }
 
   // Takes productID as a parameter and allows changing product from available to unavailable and vice versa
-  function ToggleAvailable($receiptID){
+  function ToggleAvailable($productID){
     $stmt = $GLOBALS['conn']->prepare("SELECT available FROM Inventory WHERE productID = :productID);");
-    $stmt->bindParam(":receiptID", $receiptID, PDO::PARAM_STR);
+    $stmt->bindParam(":productID", $productID, PDO::PARAM_STR);
     $stmt->execute() or die($GLOBALS['conn']->error);
     $result = $stmt->fetch();
     $available = $result[0];
