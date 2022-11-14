@@ -89,14 +89,13 @@
     $stmt->bindParam(":accountID", $accountID, PDO::PARAM_INT);
     $stmt->execute() or die($GLOBALS['conn']->error);
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $GLOBALS['conn'] = null;
     return $stmt;
   }
 
   // Takes in all parameters and UPDATES accounts table
   function EditOwnAccount($accountID, $fname, $lname, $DOB, $email, $username, $password, $phoneno){
     $stmt = $GLOBALS['conn']->prepare("UPDATE Accounts SET fname=:fname, lname=:lname , DOB=:DOB, email=:email,
-            username=:username, phoneno=:phoneno WHERE accountID = :accountID;")
+            username=:username, phoneno=:phoneno WHERE accountID = :accountID;");
     $stmt->bindParam(":accountID", $accountID, PDO::PARAM_INT);
     $stmt->bindParam(":fname", $fname, PDO::PARAM_STR);
     $stmt->bindParam(":lname", $lname, PDO::PARAM_STR);
@@ -113,5 +112,14 @@
     $stmt->execute() or die($GLOBALS['conn']->error);
 
     $GLOBALS['conn'] = null;
+  }
+
+  // Takes in accountID as a parameter and returns the last visit date
+  function GetLastVisitDate($accountID){
+    $stmt = $GLOBALS['conn']->prepare("SELECT MAX(b.date) FROM bookingdetails a JOIN bookings b ON a.bookingID = b.bookingID WHERE a.accountID = :accountID");
+    $stmt->bindParam(":accountID", $accountID, PDO::PARAM_INT);
+    $stmt->execute() or die($GLOBALS['conn']->error);
+    $GLOBALS['conn'] = null;
+    return $stmt;
   }
 ?>
