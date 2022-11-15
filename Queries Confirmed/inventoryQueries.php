@@ -67,8 +67,6 @@
       $stmt->bindParam(":productID", $productID, PDO::PARAM_STR);
       $stmt->execute() or die($GLOBALS['conn']->error);
     }
-
-    $GLOBALS['conn'] = null;
   }
 
   function GetProductsFromCart($cart){
