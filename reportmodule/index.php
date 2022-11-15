@@ -91,13 +91,13 @@
 		<section class="charts">
 
 
-			<div id="barchart" style="width: 400px; height: 300px; margin-top:10px;"></div>
+			<div id="barchart" style="width: 650px; height: 500px; margin-left: 17px; margin-top:10px;"></div>
 			<br>
 			<br>
-			<div id="barchart2" style="width: 400px; height: 300px;"></div>
+			<div id="barchart2" style="width: 650px; height: 500px; margin-left: 17px;"></div>
 			<br>
 			<br>
-			<div id="barchart3" style="width: 400px; height: 300px;"></div>
+			<div id="barchart3" style="width: 650px; height: 500px; margin-left: 17px;"></div>
 		
 			</section>
 	</div>
