@@ -1,6 +1,3 @@
-CREATE DATABASE CSK;
-USE DATABASE CSK;
-
 CREATE TABLE Accounts(
 accountID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 fName varchar(20) NOT NULL,
@@ -9,14 +6,15 @@ DOB date NOT NULL,
 email varchar (50) NOT NULL,
 username varchar (10) NOT NULL,
 password varchar (10) NOT NULL,
-phoneNo int (10) UNSIGNED NOT NULL
+phoneNo int (10) UNSIGNED NOT NULL,
+role tinyint UNSIGNED NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Bookings(
 bookingID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 date datetime NOT NULL,
 bookingDesc varchar (50) NOT NULL,
-isBooked bit NOT NULL
+isBooked tinyint NOT NULL DEFAULT  1
 );
 
 CREATE TABLE BookingDetails(
@@ -33,13 +31,46 @@ accountID int (4) UNSIGNED NOT NULL,
 subject varchar (50) NOT NULL,
 notifDesc varchar (100) NOT NULL,
 date datetime NOT NULL,
-isRead bit NOT NULL,
+isRead tinyint NOT NULL DEFAULT  1,
 FOREIGN KEY (accountID) REFERENCES Accounts (accountID)
 );
 
 CREATE TABLE Advertisements(
 advertID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-imgName varchar(20) NOT NULL,
+imgName varchar(100) NOT NULL,
 title varchar (50) NOT NULL,
 advertDesc varchar (100) NOT NULL
+);
+
+CREATE TABLE Inventory(
+productID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+productName varchar (50) NOT NULL,
+productDesc varchar (100) NOT NULL,
+productImgName varchar (50) NOT NULL,
+price decimal (4,2) UNSIGNED NOT NULL,
+available tinyint NOT NULL DEFAULT 1
+);
+
+CREATE TABLE Receipts(
+receiptID int (4) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+accountID int (4) UNSIGNED NOT NULL,
+datePurchased datetime NOT NULL,
+dateReceived datetime,
+amount decimal(5,2) UNSIGNED NOT NULL,
+address varchar(50) NOT NULL,
+city varchar(20) NOT NULL,
+state varchar(20) NOT NULL,
+postcode int(6) UNSIGNED NOT NULL,	
+delivered tinyint NOT NULL DEFAULT 0,
+cancelled tinyint NOT NULL DEFAULT 0,
+FOREIGN KEY (accountID) REFERENCES Accounts (accountID)
+);
+
+CREATE TABLE ItemSold(
+receiptID int (4) UNSIGNED NOT NULL,
+productID int (4) UNSIGNED NOT NULL,
+quantity int (2) UNSIGNED NOT NULL,
+PRIMARY KEY (receiptID, productID),
+FOREIGN KEY (receiptID) REFERENCES Receipts (receiptID),
+FOREIGN KEY (productID) REFERENCES Inventory (productID)
 );
