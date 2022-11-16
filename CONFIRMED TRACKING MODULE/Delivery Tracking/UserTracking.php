@@ -61,7 +61,7 @@
 
 	<?php
 		
-		include'../receiptQueries.php';
+		include'receiptQueries.php';
         
 		$result = GetReceiptsForUser(100);
 

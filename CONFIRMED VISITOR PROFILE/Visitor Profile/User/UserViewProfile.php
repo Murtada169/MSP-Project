@@ -114,7 +114,8 @@ float: left;
 		
  			<?php
 
-				include'../../accountsQueries.php';
+				//include'../../accountsQueries.php';
+				include'accountsQueries.php';
 
 				$result = ViewOwnAccount(100);
 

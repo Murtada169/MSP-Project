@@ -57,7 +57,8 @@
     <h1 id="text1" style="text-align: center;">Profile Updated Successfully!</h1>
     <br>
     <?php 
-        include'../../accountsQueries.php';	
+        //include'../../accountsQueries.php';	
+        include'accountsQueries.php';
                 
                 $accountID=$_POST['accountID'];
                 $fName=$_POST['fname'];

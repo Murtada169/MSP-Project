@@ -26,7 +26,7 @@
 
 }
 
-input[type=text],  textarea{
+input[type=text], textarea{
   width: 70%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -156,7 +156,8 @@ float: left;
 
 	<?php
 
-        include'../../accountsQueries.php';
+        //include'../../accountsQueries.php';
+		include'accountsQueries.php';
         
         //$result = DisplayUserAccountDetails($_POST['editbutton']);
 		//$row = mysqli_fetch_assoc($result);
@@ -248,7 +249,7 @@ float: left;
 				</div>
 			</div>
 
-			<!--<div class="row">
+			<!--<div class="row">-
 				<div class="col-25">
 					<label><h4><b>Last Visit Date: </b></h4></label>
 				</div>

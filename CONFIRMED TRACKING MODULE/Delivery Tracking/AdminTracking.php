@@ -128,7 +128,7 @@
 	
 	<?php
 		
-		include'../receiptQueries.php';
+		include'receiptQueries.php';
         
 		if(isset ($_POST['deliverbutton'])){
 			ToggleDelivered($_POST['deliverbutton']);
