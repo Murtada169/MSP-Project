@@ -11,7 +11,7 @@
 
 	<style>
 		#admintracking{
-		padding: 150px;
+		padding: 90px;
 		}
 
 		#text1{
@@ -21,11 +21,18 @@
 		text-align: center;
 		}
 
+		/* fieldset{
+		padding: 5px;
+		border-width: 1px;
+
+		} */
+
 		#AdminTrackingTable {
 		margin-left: auto;
 		margin-right: auto;
 		font-family: 'Faustina', serif;
 		/*border-color: #04AA6D;*/
+		padding: 50px;
 		}
 
 
@@ -82,7 +89,7 @@
 		float: right;
 		}*/
 
-		.editbutton {
+		.deliverbutton {
 		margin-bottom: 20px;
 		display: block;
 		margin-left: auto;
@@ -96,15 +103,42 @@
 		transition-duration: 0.4s;
 		cursor: pointer;
 		}
-		.editbutton a{
+		.deliverbutton a{
 		text-align: center;
 		text-decoration: none;
 		color: black;
 		
 		font-size: 16px;
 		margin: 4px 2px;
+		} 
+		.deliverbutton:hover {
+		background-color: white;
+		color: black;
 		}
-		.editbutton:hover {
+
+		.cancelbutton {
+		margin-bottom: 20px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+
+		background-color: #04AA6D; /* Green */
+		border: 2px solid #04AA6D;
+		color: black;
+		padding: 15px 32px;
+		
+		transition-duration: 0.4s;
+		cursor: pointer;
+		}
+		.cancelbutton a{
+		text-align: center;
+		text-decoration: none;
+		color: black;
+		
+		font-size: 16px;
+		margin: 4px 2px;
+		} 
+		.cancelbutton:hover {
 		background-color: white;
 		color: black;
 		}
@@ -142,7 +176,7 @@
 
 		
 	?>
-
+	
 	<table table id='AdminTrackingTable'>
 		<tr>
 			<th>Receipt ID</th>
@@ -219,14 +253,12 @@
 		echo"</td>
 		<td>
 		<form action='AdminTracking.php' method='post'>
-			<button class='deliverbutton' style='width: 100px; text-align: center;' 
-			name='deliverbutton' value=$receiptID type='submit'>Delivered</button>
+			<button class='deliverbutton' name='deliverbutton' value=$receiptID type='submit'>Delivered</button>
 	    </form>
 		</td>
 		<td>
 		<form action='AdminTracking.php' method='post'>
-			<button class='cancelbutton' style='width: 100px;' 
-			name='cancelbutton' value=$receiptID type='submit'>Cancelled</button>
+			<button class='cancelbutton' name='cancelbutton' value=$receiptID type='submit'>Cancelled</button>
 	    </form>
 		</td>
 		</tr>";
@@ -234,6 +266,7 @@
 	}
 	?>
 	</table>  
+
 </div> 
 
 <!--<script>
