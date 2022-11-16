@@ -11,7 +11,7 @@
 
 	<style>
 		#admintracking{
-		padding: 90px;
+		padding: 150px;
 		}
 
 		#text1{
